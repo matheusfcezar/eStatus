@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  ui:
+    build:
+      context: ui
+      dockerfile: Dockerfile
+  
+  api:
+    image: maven:3.5.3-jdk-8
+    ports:
+      - 8081:8080
+    volumes:
+      - ./api:/api
+      - ~/.m2:/root/.m2
+    working_dir: /api
+    command: >
+      bash -c "mvn clean install
+      && cd ../api
+      && mvn clean spring-boot:run -Dspring-boot.run.profiles=docker"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db-postgres:5432/spia
+      - SPRING_DATASOURCE_USER=postgres
+      - SPRING_DATASOURCE_PASS=postgres
+      - ORIGEM_PERMITIDA=localhost:4200
+      - COOKIE_PATH=/api
+      - AUTORIZACAO_CLIENT_ID=spia-cliente
+      - AUTORIZACAO_CLIENT_SECRET=
+      - TOKEN_VALIDITY_SECONDS=900
+      - TOKEN_REFRESH_TOKEN=3600
+      - SIGNING_KEY=a
