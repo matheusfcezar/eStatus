@@ -3,7 +3,7 @@ version: '3'
 services:
   ui:
     build:
-      context: ui
+      context: frontend
       dockerfile: Dockerfile
   
   api:
