@@ -3,10 +3,9 @@ package br.com.status.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,19 +22,19 @@ public class PublicController {
 	private UsuarioService usuarioService;
 	
 	@PostMapping("usuario/new")
-	public HttpStatus criarUsuario(@Valid @RequestBody Usuario usuario) {
+	public ResponseEntity<Usuario> criarUsuario(@Valid @RequestBody Usuario usuario) {
 
 		return usuarioService.salvar(usuario);
 	}
 	
-	@PutMapping("usuario/ativar/{id}")
-	public HttpStatus ativarUsuario(@PathVariable Long id, @RequestParam String hash) {
+	@GetMapping("usuario/ativar")
+	public ResponseEntity<Usuario> ativarUsuario(@RequestParam String email) {
 		
-		return null;
+		return usuarioService.ativarUsuario(email);
 	}
 	
 	@PostMapping("usuario/resetPassword")
-	public HttpStatus resetarSenha(String email) {
+	public ResponseEntity<Usuario> resetarSenha(String email) {
 		
 		return null;
 	}
