@@ -34,7 +34,7 @@ public class MailService {
 
 		helper.setTo(InternetAddress.parse(email.getEmailDestinatario()));
 		helper.setSubject(email.getAssunto());
-		helper.setText(email.getCorpoEmail());
+		helper.setText(email.getMensagem());
 
 		try {
 			emailSender.send(message);

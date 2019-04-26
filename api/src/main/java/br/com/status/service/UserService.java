@@ -32,10 +32,11 @@ public class UserService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Usuario usuario = usuarioRepository.findByEmail(username);
+		logger.info("Usuario {} efetuando LOGIN", username);
+		Usuario usuario = usuarioRepository.findByEmailAndAtivo(username, true);
 		
 		if (usuario == null) {
-			throw new RuntimeException("Usuário ou Senha inválido");
+			throw new RuntimeException("Usuario inativo");
 		}
 		
 		User user = new User(username, usuario.getPassword(), getPermissoes(usuario));
