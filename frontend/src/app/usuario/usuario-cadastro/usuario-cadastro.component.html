@@ -11,7 +11,7 @@
         <div class="ui-g ui-fluid">
             <div class="ui-g-12 ui-fluid">
                 <label>Seu e-mail</label>
-                <input type="email" [(ngModel)]="usuario.email" size="50" name="nome" placeholder="Seu e-mail" required pInputText>
+                <input type="email" [(ngModel)]="usuario.email" size="50" name="email" placeholder="Seu e-mail" required pInputText>
             </div>
         </div>
         <div class="ui-g ui-fluid">
@@ -34,7 +34,7 @@
             </div>
         </div>
         <div class="ui-g">
-            <div class="ui-g-12 ui-fluid"><button pButton type="submit" label="Cadastre-se" (click)="cadastrar()" [disabled]="f.invalid"></button>
+            <div class="ui-g-12 ui-fluid"><button pButton type="submit" [label]="loading ? 'Cadastrando ...' : 'Cadastre-se'" (click)="cadastrar()" [disabled]="f.invalid || loading"></button>
             </div>
         </div>
     </form>

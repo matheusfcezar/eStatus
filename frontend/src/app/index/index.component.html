@@ -1,3 +1,36 @@
-<p>
-  index works!
-</p>
+<div class="toolbar ui-g">
+  <div class="ui-g-6 ui-fluid">
+    <div class="ui-inputgroup">
+      <input type="text" pInputText placeholder="Digite o número do processo ou dado do cliente" #num>
+      <a *ngIf="buscou" href="" (click)="limparBusca($event, num)">
+        <i style="border:none; right: 1.1em; top: 0.28em; display: inline-block; position: relative; width:0;background-color: #fff;"
+          class="pi pi-times"></i>
+      </a>
+      <button pButton type="button" icon="pi pi-search" (click)="filtrarProcessos(num.value)" class="ui-button-warn"></button>
+    </div>
+  </div>
+  <div class="ui-g-6">
+    <button *ngIf="auth.jwtPayload.advogado" style="float: right;" (click)="show()" pButton label="Novo processo" icon="pi pi-plus"></button>
+  </div>
+</div>
+<br>
+<p-table [value]="processos" selectionMode="single" [(selection)]="processoSelecionado" (onRowSelect)="onRowSelect($event)"
+  [paginator]="true" [rows]="15" dataKey="id">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Número</th>
+      <th>Data Distribuição</th>
+      <th>Vara</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-proc>
+    <tr [pSelectableRow]="proc">
+      <td>{{proc.numero}}</td>
+      <td>{{proc.dataCadastro}}</td>
+      <td>{{proc.foro.descricao}}</td>
+    </tr>
+  </ng-template>
+</p-table>
+<div *ngIf="processos.length === 0" style="text-align: center" class="ui-g-12">
+  Nenhum processo cadastrado
+</div>

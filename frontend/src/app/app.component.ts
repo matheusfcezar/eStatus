@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.items = [
-      {label: 'Sair', icon: 'pi pi-fw pi-power-off', command: () => this.logout() }
+      {label: 'Sair', icon: 'pi pi-fw pi-sign-out', command: () => this.logout() }
     ];
   }
 

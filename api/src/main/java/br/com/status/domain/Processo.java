@@ -1,43 +1,32 @@
 package br.com.status.domain;
 
+import java.time.LocalDate;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
-import java.util.Date;
+import javax.persistence.ManyToOne;
 
 @Entity
-@Table(name="tb_usuario")
-public class Usuario {
+public class Processo {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	private Long numero;
+	private String numero;
 	
-	private Date dataCadastro;
+	private LocalDate dataCadastro;
 
-    private Date dataEncerramento;
+    private LocalDate dataEncerramento;
+    
+    private String tipoProcesso;
 
-    private String tipoJustica;
-
-    private String regiao;
-
-    private String secao;
-
-    private String subsecao;
-
-    private String juiz;
-
-    private String cidade;
-
-    private String foro;
-
-    private String vara;
-	
-	//private StatusDoProcessoEnum status;
+    private NaturezaEnum natureza;
+    
+    @ManyToOne
+    private Foro foro;
 
     public Long getId() {
 		return id;
@@ -47,100 +36,52 @@ public class Usuario {
 		this.id = id;
 	}
 
-    public Long getNumeroProcesso() {
+    public String getNumero() {
 		return numero;
 	}
 
-	public void setNumeroProcesso(Long numero) {
+	public void setNumero(String numero) {
 		this.numero = numero;
 	}
 
-    public Date getDataCadastro() {
+	public LocalDate getDataCadastro() {
 		return dataCadastro;
 	}
 
-	public void setDataCadastro(Date dataCadastro) {
+	public void setDataCadastro(LocalDate dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
 
-    public Date getDataEncerramento() {
+	public LocalDate getDataEncerramento() {
 		return dataEncerramento;
 	}
 
-	public void setDataEncerramento(Date dataEncerramento) {
+	public void setDataEncerramento(LocalDate dataEncerramento) {
 		this.dataEncerramento = dataEncerramento;
 	}
 
-    public String getTipoJustica() {
-		return tipoJustica;
+	public String getTipoProcesso() {
+		return tipoProcesso;
 	}
 
-	public void setTipoJustica(String tipoJustica) {
-		this.tipoJustica = tipoJustica;
+	public void setTipoProcesso(String tipoProcesso) {
+		this.tipoProcesso = tipoProcesso;
 	}
 
-    public String getRegiao() {
-		return regiao;
+	public NaturezaEnum getNatureza() {
+		return natureza;
 	}
 
-	public void setRegiao(String regiao) {
-		this.regiao = regiao;
+	public void setNatureza(NaturezaEnum natureza) {
+		this.natureza = natureza;
 	}
 
-    public String getSecao() {
-		return secao;
-	}
-
-	public void setSecao(String secao) {
-		this.secao = isecaod;
-	}
-
-    public String getSubsecao() {
-		return subsecao;
-	}
-
-	public void setSubsecao(String subsecao) {
-		this.subsecao = subsecao;
-	}
-
-    public String getJuiz() {
-		return juiz;
-	}
-
-	public void setJuiz(String juiz) {
-		this.juiz = juiz;
-	}
-
-    public String getCidade() {
-		return cidade;
-	}
-
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
-	}
-
-    public String getForo() {
+	public Foro getForo() {
 		return foro;
 	}
 
-	public void setForo(String foro) {
+	public void setForo(Foro foro) {
 		this.foro = foro;
 	}
 
-    public String getVara() {
-		return vara;
-	}
-
-	public void setVara(String vara) {
-		this.vara = vara;
-	}
-
-    // public StatusDoProcessoEnum get(){
-    //     return status;
-    // }
-
-    // public void set(StatusDoProcessoEnum status){
-    //     this.status = status;
-    // }
-	
 }

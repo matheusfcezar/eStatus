@@ -1,5 +1,7 @@
 package br.com.status.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -18,5 +20,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
 	int ativarDesativar(@Param("ativo") boolean ativo, @Param("email") String email);
 	
 	Usuario findByEmailAndAtivo(String username, boolean b);
+	
+	@Query("select u from Usuario u where u.oab is not null and (u.oab like ?1% or u.cpf like ?1% or u.email like ?1%)")
+	List<Usuario> findAdvogadoByAll(String busca);
 
 }

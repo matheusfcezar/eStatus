@@ -1,0 +1,71 @@
+<div class="container-md">
+  <h2>Processo {{ processo?.numero }}</h2>
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <p-panel [transitionOptions]="'200ms'" header="Dados Básicos" [toggleable]="true">
+        <table class="table-in-panel">
+          <tr>
+            <th>Número</th>
+            <th>Data Distribuição</th>
+            <th>Local</th>
+          </tr>
+          <tr>
+            <td>{{processo?.numero}}</td>
+            <td>{{processo?.dataCadastro}}</td>
+            <td>{{processo?.foro.descricao}}</td>
+          </tr>
+        </table>
+        <p-footer *ngIf="auth.jwtPayload.advogado" style="text-align: right !important">
+          <button pButton type="button" icon="pi pi-edit" (click)="showDadosBasicosModal()" label="Editar dados básicos"
+            class="ui-button-rounded ui-button-secondary"></button>
+        </p-footer>
+      </p-panel>
+    </div>
+  </div>
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <p-panel [transitionOptions]="'200ms'" header="Andamento do Processo" [toggleable]="true">
+      </p-panel>
+    </div>
+  </div>
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <p-panel [transitionOptions]="'200ms'" header="Usuários" [toggleable]="true">
+        <table class="table-in-panel">
+          <thead>
+            <tr>
+              <th *ngIf="auth.jwtPayload.advogado"></th>
+              <th>Nome</th>
+              <th>E-mail</th>
+              <th>Posição</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let u of usuarios">
+              <td *ngIf="auth.jwtPayload.advogado">
+                <p-checkbox name="groupname" [value]="u.id" [(ngModel)]="usuariosSelecionados"></p-checkbox>
+              </td>
+              <td>{{u.nome}}</td>
+              <td>{{u.email}}</td>
+              <td>{{u.email === auth.jwtPayload.user_name ? 'Você' : u.advogado ? 'Advogado' : 'Cliente'}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <p-footer *ngIf="auth.jwtPayload.advogado" style="text-align: right !important">
+          <button pButton type="button" icon="pi pi-plus" (click)="showUsuarioModal()" label="Adicionar Usuário" class="ui-button-rounded ui-button-secondary"></button>
+          <button pButton *ngIf="usuariosSelecionados.length > 0" type="button" icon="pi pi-plus" (click)="removerUsuarios()" [label]="usuariosSelecionados?.length > 1 ? 'Remover usuários' : 'Remover usuário'" class="ui-button-rounded ui-button-secondary"></button>
+        </p-footer>
+      </p-panel>
+    </div>
+  </div>
+  <div class="ui-g">
+    <div class="ui-g-6">
+      <p-panel [transitionOptions]="'200ms'" header="Documentos" [toggleable]="true">
+      </p-panel>
+    </div>
+    <div class="ui-g-6">
+      <p-panel [transitionOptions]="'200ms'" header="Atividades" [toggleable]="true">
+      </p-panel>
+    </div>
+  </div>
+</div>

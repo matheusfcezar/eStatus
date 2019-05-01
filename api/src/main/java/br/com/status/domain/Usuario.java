@@ -7,17 +7,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.br.CPF;
+
 @Entity
-@Table(name="tb_usuario")
 public class Usuario {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	
+	@CPF
+	private String cpf;
 	
 	@NotNull
 	private String nome;
@@ -107,6 +110,15 @@ public class Usuario {
 	public String getUfOab() {
 		return isAdvogado() ? this.oab.substring(oab.length()-2, oab.length()) : null;
 	}
+	
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
 	
 	public boolean isAdvogado() {
 		return this.oab != null;

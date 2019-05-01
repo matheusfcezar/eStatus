@@ -1,0 +1,7 @@
+.invisivel {
+    visibility: hidden;
+}
+
+::ng-deep .ui-tabview-panels {
+    text-align: center;
+}

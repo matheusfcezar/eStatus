@@ -1,9 +1,11 @@
 <div *ngIf="usuarioLogado" class="topbar">
-<span class="nome-sistema">eStatus</span>
-<span class="center">f</span>
-<p-menu #menu [popup]="true" [model]="items"></p-menu>
+    <a class="nome-sistema" routerLink="/index">eStatus</a>
+    <span class="center">f</span>
+    <p-menu #menu [popup]="true" [model]="items"></p-menu>
 
-<button pButton class="button-menu ui-button-raised ui-button-rounded ui-button-secondary" 
-    type="submit" icon="pi pi-user" [label]="nomeUsuario" (click)="menu.toggle($event)"></button>
+    <button pButton class="button-menu ui-button-raised ui-button-rounded ui-button-secondary" 
+        type="submit" icon="pi pi-user" [label]="nomeUsuario" (click)="menu.toggle($event)"></button>
 </div>
-<router-outlet></router-outlet>
+<div class="content container-gt">
+    <router-outlet></router-outlet>
+</div>
