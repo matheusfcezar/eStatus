@@ -1,0 +1,53 @@
+<p-tabView >
+  <p-progressSpinner *ngIf="carregando"></p-progressSpinner>
+  <p-tabPanel *ngIf="!carregando" header="Cliente">
+    <div>
+      <div class="ui-g ui-fluid">
+        <div class="ui-g-12 ui-fluid">
+          <input type="text" size="50" name="nome" [(ngModel)]="usuario.nome" placeholder="Insira o nome completo do cliente"
+            required pInputText>
+        </div>
+      </div>
+      <div class="ui-g ui-fluid">
+        <div class="ui-g-12 ui-fluid">
+          <input type="email" size="50" name="email" [(ngModel)]="usuario.email" placeholder="Insira o e-mail do cliente"
+            required pInputText>
+        </div>
+      </div>
+      <div class="ui-g ui-fluid">
+        <div class="ui-g-12 ui-fluid">
+          <input type="number" size="50" name="cpf" placeholder="Insira o cpf do cliente" required pInputText>
+        </div>
+      </div>
+      <div class="ui-g">
+        <div class="ui-g-12 ui-fluid"><button pButton type="submit" (click)="addUser()" label="Enviar convite"></button>
+        </div>
+      </div>
+    </div>
+  </p-tabPanel>
+  <p-tabPanel *ngIf="!carregando" header="Advogado" style="text-align: center">
+    <div [ngClass]="{'invisivel': carregando}">
+      <div class="ui-g ui-fluid">
+        <div class="ui-g-12 ui-fluid">
+          <p-autoComplete field="nome" [(ngModel)]="usuario" [suggestions]="advogados" placeholder="Número da OAB, CPF ou e-mail do advogado"
+            (completeMethod)="findAdvogados($event)"></p-autoComplete>
+        </div>
+      </div>
+      <div class="ui-g ui-fluid">
+        <div class="ui-g-12 ui-fluid" style="text-align: center">
+          <span *ngIf="!usuario.id">
+            Nenhum advogado selecionado
+          </span>
+          <span *ngIf="usuario.id">
+            <p>OAB: {{ usuario.oab }}</p>
+            <p>E-mail: {{ usuario.email }}</p>
+          </span>
+        </div>
+      </div>
+      <div class="ui-g">
+        <div class="ui-g-12 ui-fluid"><button pButton type="submit" (click)="addAdvogado()" label="Enviar convite"></button>
+        </div>
+      </div>
+    </div>
+  </p-tabPanel>
+</p-tabView>

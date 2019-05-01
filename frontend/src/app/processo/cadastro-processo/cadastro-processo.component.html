@@ -1,0 +1,37 @@
+<div class="ui-g">
+  <div class="ui-g-12 ui-fluid">
+    <label>Número do Processo</label>
+    <input type="text" size="50" name="numero" [(ngModel)]="processo.numero" placeholder="Digite o número do processo"
+      required pInputText>
+  </div>
+</div>
+<div class="ui-g">
+  <div class="ui-g-12 ui-fluid">
+    <label>Natureza</label>
+    <p-dropdown [options]="naturezas" [(ngModel)]="processo.natureza" ></p-dropdown>
+  </div>
+</div>
+<div class="ui-g">
+  <div class="ui-g-12 ui-fluid">
+    <label>Tipo do Processo</label>
+    <input type="text" size="50" name="tipo" [(ngModel)]="processo.tipoProcesso" placeholder="Digite o tipo do processo"
+      required pInputText>
+  </div>
+</div>
+<div class="ui-g">
+  <div class="ui-g-12 ui-fluid">
+    <label>Foro</label>
+    <p-autoComplete [(ngModel)]="processo.foro" field="descricao" [suggestions]="foros" (completeMethod)="findForos($event)"></p-autoComplete>
+  </div>
+</div>
+<div class="ui-g">
+  <div class="ui-g-12 ui-fluid">
+    <label>Descrição</label>
+    <textarea pInputTextarea name="senha" placeholder="Digite uma breve descrição do teor do Processo" rows="4"
+      required></textarea>
+  </div>
+</div>
+<div class="ui-g">
+  <div class="ui-g-12 ui-fluid"><button pButton type="submit" (click)="salvar()" [label]="editando ? 'Editar Processo' : 'Criar Processo'"></button>
+  </div>
+</div>

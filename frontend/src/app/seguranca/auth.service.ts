@@ -10,6 +10,7 @@ export class AuthService {
 
   oauthTokenUrl =  `${environment.apiUrl}/oauth/token`;
   jwtPayload: any;
+  advogado: boolean;
 
   constructor(
     private http: HttpClient, private jwtHelper: JwtHelperService

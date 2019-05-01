@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Usuario } from '../model';
 import { environment } from 'src/environments/environment';
@@ -14,5 +14,15 @@ export class UsuarioService {
 
     cadastrar(usuario: Usuario): Observable<any> {
         return this.httpClient.post(`${this.publicUrl}/usuario/new`, usuario);
+    }
+
+    findAdvogados(busca: string): Observable<any> {
+        return this.httpClient.get(`${this.usuarioUrl}/advogado`, {
+            params: new HttpParams().set('busca', busca) });
+    }
+
+    findUsuarioPorEmail(busca: string): Observable<any> {
+        return this.httpClient.get(`${this.usuarioUrl}/filtrar`, {
+            params: new HttpParams().set('email', busca) });
     }
 }

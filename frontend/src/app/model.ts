@@ -9,3 +9,21 @@ export class Usuario {
     advogado: boolean;
     ativo: boolean;
 }
+
+
+export class Processo {
+    id: number;
+    numero: string;
+    dataCadastro: Date;
+    dataEncerramento: Date;
+    natureza: string;
+    tipoProcesso: string;
+    foro: Foro;
+}
+
+export class Foro {
+    juiz: string;
+    cidade: string;
+    vara: string;
+    descricao: string;
+}

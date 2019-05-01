@@ -16,6 +16,7 @@
 .container-gt {
     width: 1000px;
     margin: 0 auto;
+    padding: 30px;
 }
 
 body {
