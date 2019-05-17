@@ -27,3 +27,11 @@ export class Foro {
     vara: string;
     descricao: string;
 }
+
+export class Andamento {
+    id: number;
+    data: any;
+    descricao: string;
+    tipo: string;
+    idProcesso: number;
+}

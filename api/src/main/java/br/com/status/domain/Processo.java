@@ -7,6 +7,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class Processo {
@@ -15,16 +18,21 @@ public class Processo {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotNull
 	private String numero;
 	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	private LocalDate dataCadastro;
 
     private LocalDate dataEncerramento;
     
+    @NotNull
     private String tipoProcesso;
-
-    private NaturezaEnum natureza;
     
+    @NotNull
+    private Natureza natureza;
+    
+    @NotNull
     @ManyToOne
     private Foro foro;
 
@@ -68,11 +76,11 @@ public class Processo {
 		this.tipoProcesso = tipoProcesso;
 	}
 
-	public NaturezaEnum getNatureza() {
+	public Natureza getNatureza() {
 		return natureza;
 	}
 
-	public void setNatureza(NaturezaEnum natureza) {
+	public void setNatureza(Natureza natureza) {
 		this.natureza = natureza;
 	}
 

@@ -25,6 +25,24 @@
   <div class="ui-g">
     <div class="ui-g-12">
       <p-panel [transitionOptions]="'200ms'" header="Andamento do Processo" [toggleable]="true">
+        <p-confirmDialog header="Confirmar Exclusão" acceptLabel="Excluir" rejectLabel="Cancelar" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+        <p-table [value]="andamentos" selectionMode="single" [(selection)]="andamentoSelecionado" (onRowSelect)="showAndamentoModal(null)"
+          dataKey="id">
+          <ng-template pTemplate="body" let-andamento>
+            <tr [pSelectableRow]="andamento">
+              <td width="120px">{{andamento.data}}</td>
+              <td>{{andamento.tipo}}</td>
+              <td width="100px">
+                <button pButton type="button" (click)="showAndamentoModal(andamento)" class="ui-button-secondary" icon="pi pi-pencil"></button>&nbsp;
+                <button pButton type="button" (click)="confirmarExclusaoDeAndamento(andamento.id)" class="ui-button-secondary" icon="pi pi-trash"></button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+        <p-footer *ngIf="auth.jwtPayload.advogado" style="text-align: right !important">
+            <button pButton type="button" icon="pi pi-plus" (click)="showAndamentoModal()" label="Adicionar Expediente"
+              class="ui-button-rounded ui-button-secondary"></button>
+          </p-footer>
       </p-panel>
     </div>
   </div>

@@ -53,6 +53,7 @@ export class CadastroProcessoComponent implements OnInit {
         resp => {
           console.log(resp);
           if (resp.id) {
+            this.ref.close();
             this.router.navigate(['processo/' + resp.id]);
           }
         }

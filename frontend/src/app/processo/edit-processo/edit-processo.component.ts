@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Processo, Usuario } from 'src/app/model';
+import { Processo, Usuario, Andamento } from 'src/app/model';
 import { ProcessoService } from '../processo.service';
 import { AuthService } from 'src/app/seguranca/auth.service';
-import { DialogService } from 'primeng/api';
+import { DialogService, ConfirmationService } from 'primeng/api';
 import { AddUsuarioComponent } from '../add-usuario/add-usuario.component';
 import { CadastroProcessoComponent } from '../cadastro-processo/cadastro-processo.component';
+import { AndamentoComponent } from '../andamento/andamento.component';
 
 @Component({
   selector: 'app-edit-processo',
@@ -16,17 +17,19 @@ import { CadastroProcessoComponent } from '../cadastro-processo/cadastro-process
 export class EditProcessoComponent implements OnInit {
 
   usuariosSelecionados = [];
+  andamentoSelecionado: Andamento;
+  andamentos: Andamento[] = [];
   processo: Processo;
   usuarios: Usuario[];
 
   constructor(public auth: AuthService,
               private route: ActivatedRoute,
               public dialogService: DialogService,
-              private processoService: ProcessoService) { }
+              private processoService: ProcessoService,
+              private confirmationService: ConfirmationService) { }
 
   ngOnInit() {
     this.getProcesso();
-    console.log(this.auth.advogado);
   }
 
   getProcesso() {
@@ -35,6 +38,15 @@ export class EditProcessoComponent implements OnInit {
       resp => {
         this.processo = resp;
         this.getUsuarios();
+        this.getAndamentos();
+      }
+    );
+  }
+
+  getAndamentos() {
+    this.processoService.getAndamentos(this.processo.id).subscribe(
+      resp => {
+        this.andamentos = resp;
       }
     );
   }
@@ -54,6 +66,22 @@ export class EditProcessoComponent implements OnInit {
     });
 
     ref.onClose.subscribe((resp) => {
+      this.getProcesso();
+    });
+  }
+
+  showAndamentoModal(andamento) {
+    console.log(andamento);
+    const ref = this.dialogService.open(AndamentoComponent, {
+      width: '400px',
+      data: { andamento: andamento ? andamento : this.andamentoSelecionado, idProcesso: this.processo.id, edit: andamento ? true : false },
+      closeOnEscape: true,
+      dismissableMask: true,
+      showHeader: false
+    });
+
+    ref.onClose.subscribe((resp) => {
+      this.andamentoSelecionado = null;
       this.getProcesso();
     });
   }
@@ -79,6 +107,23 @@ export class EditProcessoComponent implements OnInit {
         }
       )
     );
+  }
+
+  removerAndamento(id) {
+    this.processoService.removeAndamento(id).subscribe(
+      resp => {
+        this.getProcesso();
+      }
+    );
+  }
+
+  confirmarExclusaoDeAndamento(id) {
+    this.confirmationService.confirm({
+      message: 'Você confirma a exclusão deste Expediente?',
+      accept: () => {
+          this.removerAndamento(id);
+      }
+  });
   }
 
 }
