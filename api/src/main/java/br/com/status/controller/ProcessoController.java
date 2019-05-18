@@ -3,6 +3,8 @@ package br.com.status.controller;
 import java.security.Principal;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.status.domain.NaturezaEnum;
+import br.com.status.domain.Natureza;
 import br.com.status.domain.Processo;
 import br.com.status.domain.Usuario;
 import br.com.status.repository.ProcessoUsuarioRepository;
@@ -75,7 +77,7 @@ public class ProcessoController {
 	}
 	
 	@PostMapping("new")
-	public Processo criarProcesso(@RequestBody Processo processo, Principal principal) {
+	public Processo criarProcesso(@RequestBody @Valid Processo processo, Principal principal) {
 		
 		return processoService.criarProcesso(processo, principal.getName());
 	}
@@ -87,9 +89,9 @@ public class ProcessoController {
 	}
 	
 	@GetMapping("naturezas")
-	public NaturezaEnum[] getNaturezas() {
+	public Natureza[] getNaturezas() {
 		
-		return NaturezaEnum.values();
+		return Natureza.values();
 	}
 
 }

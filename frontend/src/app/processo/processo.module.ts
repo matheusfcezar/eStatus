@@ -17,9 +17,12 @@ import { AddUsuarioComponent } from './add-usuario/add-usuario.component';
 import { TabViewModule } from 'primeng/tabview';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { CheckboxModule } from 'primeng/checkbox';
+import { AndamentoComponent } from './andamento/andamento.component';
+import { CalendarModule } from 'primeng/calendar';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
-  declarations: [CadastroProcessoComponent, EditProcessoComponent, AddUsuarioComponent],
+  declarations: [CadastroProcessoComponent, EditProcessoComponent, AddUsuarioComponent, AndamentoComponent],
   imports: [
     CommonModule,
     ProcessoRoutingModule,
@@ -35,9 +38,11 @@ import { CheckboxModule } from 'primeng/checkbox';
     TableModule,
     TabViewModule,
     ProgressSpinnerModule,
-    CheckboxModule
+    CheckboxModule,
+    CalendarModule,
+    ConfirmDialogModule
   ],
   providers: [ProcessoService],
-  entryComponents: [CadastroProcessoComponent, AddUsuarioComponent]
+  entryComponents: [CadastroProcessoComponent, AddUsuarioComponent, AndamentoComponent]
 })
 export class ProcessoModule { }

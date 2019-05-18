@@ -24,6 +24,8 @@ import { ProcessoService } from './processo/processo.service';
 import { DropdownModule } from 'primeng/dropdown';
 import { AddUsuarioComponent } from './processo/add-usuario/add-usuario.component';
 import { CommonModule } from '@angular/common';
+import { AndamentoComponent } from './processo/andamento/andamento.component';
+import { ConfirmationService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -51,8 +53,8 @@ import { CommonModule } from '@angular/common';
     AppRoutingModule,
     SegurancaModule
   ],
-  providers: [AppService, ProcessoService, { provide: HTTP_INTERCEPTORS, useClass: JwtHttpInterceptor, multi: true }],
+  providers: [AppService, ConfirmationService, ProcessoService, { provide: HTTP_INTERCEPTORS, useClass: JwtHttpInterceptor, multi: true }],
   bootstrap: [AppComponent],
-  entryComponents: [CadastroProcessoComponent, AddUsuarioComponent]
+  entryComponents: [CadastroProcessoComponent, AddUsuarioComponent, AndamentoComponent]
 })
 export class AppModule { }

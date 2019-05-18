@@ -2,12 +2,13 @@ import { Injectable } from "@angular/core";
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Processo, Usuario } from '../model';
+import { Processo, Usuario, Andamento } from '../model';
 
 @Injectable()
 export class ProcessoService {
     processoUrl = `${environment.apiUrl}/processo`;
     foroUrl = `${environment.apiUrl}/foro`;
+    andamentoUrl = `${environment.apiUrl}/andamento`;
 
     constructor(private http: HttpClient) {}
 
@@ -43,6 +44,18 @@ export class ProcessoService {
 
     getUsuarios(id: number): Observable<any> {
         return this.http.get(`${this.processoUrl}/${id}/users`);
+    }
+
+    getAndamentos(id: number): Observable<any> {
+        return this.http.get(`${this.andamentoUrl}/processo/${id}`);
+    }
+
+    addAndamento(andamento: Andamento): Observable<any> {
+        return this.http.post(`${this.andamentoUrl}`, andamento);
+    }
+
+    removeAndamento(id: number): Observable<any> {
+        return this.http.delete(`${this.andamentoUrl}/${id}`);
     }
 
     addUserInProcesso(id: number, usuario: Usuario): Observable<any> {

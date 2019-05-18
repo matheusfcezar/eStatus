@@ -20,6 +20,7 @@
     <tr>
       <th>Número</th>
       <th>Data Distribuição</th>
+      <th>Tipo de Processo</th>
       <th>Vara</th>
     </tr>
   </ng-template>
@@ -27,6 +28,7 @@
     <tr [pSelectableRow]="proc">
       <td>{{proc.numero}}</td>
       <td>{{proc.dataCadastro}}</td>
+      <td>{{proc.tipoProcesso}}</td>
       <td>{{proc.foro.descricao}}</td>
     </tr>
   </ng-template>

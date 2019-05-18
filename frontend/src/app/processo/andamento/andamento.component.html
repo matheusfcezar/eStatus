@@ -1,0 +1,32 @@
+<div *ngIf="!andamento.id || edit">
+  <div class="ui-g">
+    <div class="ui-g-12 ui-fluid">
+      <label>Data</label>
+      <p-calendar placeholder="Insira a data" dateFormat="dd/mm/yy" [(ngModel)]="andamento.data"></p-calendar>
+    </div>
+  </div>
+  <div class="ui-g">
+    <div class="ui-g-12 ui-fluid">
+      <label>Tipo</label>
+      <p-dropdown [options]="tipos" [(ngModel)]="andamento.tipo" placeholder="Selecione"></p-dropdown>
+    </div>
+  </div>
+  <div class="ui-g">
+    <div class="ui-g-12 ui-fluid">
+      <label>Descrição</label>
+      <textarea pInputTextarea name="senha" [(ngModel)]="andamento.descricao" placeholder="Digite as informações sobre a atualização"
+        rows="4" required></textarea>
+    </div>
+  </div>
+  <div class="ui-g">
+    <div class="ui-g-12 ui-fluid"><button pButton type="submit" (click)="salvar()" label="Atualizar Andamento"></button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="andamento.id && !edit">
+  <div class="ui-g">
+    <div class="ui-g-12 ui-fluid"><h3>{{ andamento.data }} - {{ andamento.tipo }}</h3></div>
+    <div class="ui-g-12 ui-fluid">{{ andamento.descricao }}</div>
+  </div>
+</div>

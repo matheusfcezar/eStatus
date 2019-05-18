@@ -1,6 +1,6 @@
 package br.com.status.domain;
 
-public enum NaturezaEnum {
+public enum Natureza {
 	
 	CIVEL,PENAL,ADMINISTRATIVO,TRABALHISTA,TRIBUTARIO;
 
