@@ -25,4 +25,8 @@ export class UsuarioService {
         return this.httpClient.get(`${this.usuarioUrl}/filtrar`, {
             params: new HttpParams().set('email', busca) });
     }
+
+    esqueciMinhaSenha(email: string): Observable<any> {
+        return this.httpClient.get(`${this.usuarioUrl}/esqueci-senha?email=${email}`);
+    }
 }

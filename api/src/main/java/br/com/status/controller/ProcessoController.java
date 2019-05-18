@@ -51,10 +51,10 @@ public class ProcessoController {
 	}
 	
 	@DeleteMapping("{idProcesso}/{idUsuario}")
-	public ResponseEntity<Usuario> removeUserInProcesso(@PathVariable Long idProcesso, @PathVariable Long idUsuario) {
-		processoService.removeUserInProcesso(idProcesso, idUsuario);
+	public ResponseEntity<String> removeUserInProcesso(@PathVariable Long idProcesso, @PathVariable Long idUsuario) {
+		Boolean retorno = processoService.removeUserInProcesso(idProcesso, idUsuario);
 		
-		return ResponseEntity.ok().build();
+		return retorno ? ResponseEntity.ok().build() : ResponseEntity.badRequest().body("É proibido excluir todas as partes de um processo.");
 	}
 	
 	@PostMapping("{id}/users")

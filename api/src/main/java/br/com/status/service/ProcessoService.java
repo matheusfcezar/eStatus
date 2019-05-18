@@ -2,6 +2,7 @@ package br.com.status.service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -79,9 +80,13 @@ public class ProcessoService {
 		processoUsuarioRepository.save(processoUsuario);
 	}
 
-	public int removeUserInProcesso(Long idProcesso, Long idUsuario) {
-
-		return processoUsuarioRepository.removerUsuarioDoProcesso(idProcesso, idUsuario);
+	public Boolean removeUserInProcesso(Long idProcesso, Long idUsuario) {
+		List<Usuario> usuarios = processoUsuarioRepository.findByProcessoId(idProcesso);
+		if (usuarios != null && usuarios.size() > 1) {
+			processoUsuarioRepository.removerUsuarioDoProcesso(idProcesso, idUsuario);
+			return true;
+		}
+		return false;
 	}
 
 }

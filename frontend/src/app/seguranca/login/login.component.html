@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="ui-g">
-            <div class="ui-g-6 esqueci-senha"><a routerLink="/">Esqueci a senha</a></div>
+            <div class="ui-g-6 esqueci-senha"><a routerLink="/" (click)="showModalEsqueciSenha()">Esqueci a senha</a></div>
             <div class="ui-g-6 ui-fluid"><button pButton type="submit" label="Login" 
                 (click)="login(email.value, senha.value); senha.value = '';"></button>
             </div>

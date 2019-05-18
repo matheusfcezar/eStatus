@@ -32,7 +32,7 @@
             <tr [pSelectableRow]="andamento">
               <td width="120px">{{andamento.data}}</td>
               <td>{{andamento.tipo}}</td>
-              <td width="100px">
+              <td *ngIf="auth.jwtPayload.advogado" width="100px">
                 <button pButton type="button" (click)="showAndamentoModal(andamento)" class="ui-button-secondary" icon="pi pi-pencil"></button>&nbsp;
                 <button pButton type="button" (click)="confirmarExclusaoDeAndamento(andamento.id)" class="ui-button-secondary" icon="pi pi-trash"></button>
               </td>
@@ -71,7 +71,7 @@
         </table>
         <p-footer *ngIf="auth.jwtPayload.advogado" style="text-align: right !important">
           <button pButton type="button" icon="pi pi-plus" (click)="showUsuarioModal()" label="Adicionar Usuário" class="ui-button-rounded ui-button-secondary"></button>
-          <button pButton *ngIf="usuariosSelecionados.length > 0" type="button" icon="pi pi-plus" (click)="removerUsuarios()" [label]="usuariosSelecionados?.length > 1 ? 'Remover usuários' : 'Remover usuário'" class="ui-button-rounded ui-button-secondary"></button>
+          <button pButton *ngIf="usuariosSelecionados.length > 0 " type="button" icon="pi pi-plus" (click)="removerUsuarios()" [label]="usuariosSelecionados?.length > 1 ? 'Remover usuários' : 'Remover usuário'" class="ui-button-rounded ui-button-secondary"></button>
         </p-footer>
       </p-panel>
     </div>

@@ -43,6 +43,11 @@ export class AddUsuarioComponent implements OnInit {
 
   addAdvogado() {
     this.carregando = true;
+    this.processoService.addUserInProcesso(this.route.snapshot.params.id, this.usuario).subscribe(
+      resp => {
+        this.ref.close();
+      }
+    );
   }
 
 }

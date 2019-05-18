@@ -63,5 +63,8 @@ public class UsuarioController {
 		processo.setId(id);
 		processoUsuarioRepository.save(new ProcessoUsuario(processo, usuario));
 	}
-
+	@GetMapping("esqueci-senha")
+	public Boolean esqueciMinhaSenha(@RequestParam String email) {
+		return true;
+    }
 }

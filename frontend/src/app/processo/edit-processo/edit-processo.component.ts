@@ -71,7 +71,6 @@ export class EditProcessoComponent implements OnInit {
   }
 
   showAndamentoModal(andamento) {
-    console.log(andamento);
     const ref = this.dialogService.open(AndamentoComponent, {
       width: '400px',
       data: { andamento: andamento ? andamento : this.andamentoSelecionado, idProcesso: this.processo.id, edit: andamento ? true : false },
@@ -104,6 +103,8 @@ export class EditProcessoComponent implements OnInit {
           this.getUsuarios();
           alert('Usuario removido com sucesso');
           this.usuariosSelecionados.splice(this.usuariosSelecionados.indexOf(id), 1);
+        }, error => {
+          alert(error.error);
         }
       )
     );
