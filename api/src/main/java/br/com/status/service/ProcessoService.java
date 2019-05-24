@@ -34,6 +34,11 @@ public class ProcessoService {
 		this.usuarioService = usuarioService;
 	}
 	
+	public Processo getProcessoByNumero(String numeroProcesso) {
+		
+		return processoRepository.findByNumero(numeroProcesso);
+	}
+	
 	@Transactional
 	public Processo criarProcesso(Processo processo, String email) {
 		Usuario usuario = usuarioRepository.findByEmail(email);
