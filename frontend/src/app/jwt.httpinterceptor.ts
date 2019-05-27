@@ -11,6 +11,13 @@ export class JwtHttpInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = localStorage.getItem('token');
     let clone: HttpRequest<any>;
+    if (request.url.toString().includes('arquivo/add')) {
+      return next.handle(request.clone({
+        setHeaders: {
+          Authorization: `Bearer ${token}`
+        }
+      }));
+    }
     if (token &&
       (!request.url.toString().startsWith(`${environment.apiUrl}/oauth`)
       && !request.url.toString().startsWith(`${environment.apiUrl}/public`))) {

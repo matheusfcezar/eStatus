@@ -20,9 +20,12 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { AndamentoComponent } from './andamento/andamento.component';
 import { CalendarModule } from 'primeng/calendar';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { AddArquivoComponent } from './add-arquivo/add-arquivo.component';
+import { FileUploadModule } from 'primeng/fileupload';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 
 @NgModule({
-  declarations: [CadastroProcessoComponent, EditProcessoComponent, AddUsuarioComponent, AndamentoComponent],
+  declarations: [CadastroProcessoComponent, EditProcessoComponent, AddUsuarioComponent, AndamentoComponent, AddArquivoComponent],
   imports: [
     CommonModule,
     ProcessoRoutingModule,
@@ -40,9 +43,11 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     ProgressSpinnerModule,
     CheckboxModule,
     CalendarModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    FileUploadModule,
+    OverlayPanelModule
   ],
   providers: [ProcessoService],
-  entryComponents: [CadastroProcessoComponent, AddUsuarioComponent, AndamentoComponent]
+  entryComponents: [AddArquivoComponent, CadastroProcessoComponent, AddUsuarioComponent, AndamentoComponent]
 })
 export class ProcessoModule { }

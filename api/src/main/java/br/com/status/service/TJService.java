@@ -143,7 +143,9 @@ public class TJService {
 	public String busca(String texto, String numeroProcesso) {
 		String parteA = texto.substring(texto.indexOf(numeroProcesso), texto.length());
 		
-		return parteA.substring(0, parteA.indexOf("ADV:"));
+		String textoBusca = parteA.substring(0, parteA.indexOf("ADV:"));
+		
+		return textoBusca.replace("\n", " ");
 	}
 
 }

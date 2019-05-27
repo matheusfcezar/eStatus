@@ -25,7 +25,7 @@ public class Andamento {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	private LocalDate data;
 	
-	@Column(length=2048)
+	@Column(length=10000)
 	@NotNull
 	private String descricao;
 	
