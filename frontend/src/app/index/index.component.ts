@@ -51,6 +51,12 @@ export class IndexComponent implements OnInit {
     this.buscou = false;
   }
 
+  key(event, num) {
+    if (event.code === 'Enter') {
+      this.filtrarProcessos(num.value);
+    }
+  }
+
   show() {
     const ref = this.dialogService.open(CadastroProcessoComponent, {
       header: 'Novo Processo',

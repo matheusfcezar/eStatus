@@ -1,7 +1,7 @@
 <div class="toolbar ui-g">
   <div class="ui-g-6 ui-fluid">
     <div class="ui-inputgroup">
-      <input type="text" pInputText placeholder="Digite o número do processo ou dado do cliente" #num>
+      <input type="text" pInputText (keyup)="key($event, num)" placeholder="Digite o número do processo ou dado do cliente" #num>
       <a *ngIf="buscou" href="" (click)="limparBusca($event, num)">
         <i style="border:none; right: 1.1em; top: 0.28em; display: inline-block; position: relative; width:0;background-color: #fff;"
           class="pi pi-times"></i>

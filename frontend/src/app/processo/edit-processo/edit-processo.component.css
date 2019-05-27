@@ -1,4 +1,5 @@
 .table-in-panel {
     width: 100%;
     text-align: center;
+    border-collapse: collapse;
 }

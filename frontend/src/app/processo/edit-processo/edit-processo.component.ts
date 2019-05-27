@@ -175,7 +175,6 @@ export class EditProcessoComponent implements OnInit {
   }
 
   hideArquivo(event, overlayPanel: OverlayPanel) {
-    console.log('sasiu');
     overlayPanel.hide();
   }
 

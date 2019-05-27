@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -25,38 +26,40 @@ import br.com.status.repository.AndamentoRepository;
 public class TJService {
 
 	private String path = "/home/vitor/tj/";
-	
+
 	@Autowired
 	private ProcessoService processoService;
-	
+
 	@Autowired
 	private AndamentoRepository andamentoRepository;
-	
+
 	public Andamento salvarAtualizacao(String numeroProcesso) {
 		Processo processo = processoService.getProcessoByNumero(numeroProcesso);
 		if (processo != null) {
 			String atualizacao = buscarAtualizacaoPorProcesso(numeroProcesso);
-			Andamento andamento = new Andamento();
-			andamento.setData(LocalDate.now().minusDays(1));
-			andamento.setDescricao(atualizacao);
-			andamento.setIdProcesso(processo.getId());
-			andamento.setTipo(TipoAndamento.AUTOMATICO);
-			
-			return andamentoRepository.save(andamento);
+			if (atualizacao != null) {
+				Andamento andamento = new Andamento();
+				andamento.setData(LocalDate.now().minusDays(1));
+				andamento.setDescricao(atualizacao);
+				andamento.setIdProcesso(processo.getId());
+				andamento.setTipo(TipoAndamento.AUTOMATICO);
+				
+				return andamentoRepository.save(andamento);				
+			}
 		}
-		
+
 		return null;
 	}
 
 	public String buscarAtualizacaoPorProcesso(String numeroProcesso) {
 //		long inicio = Calendar.getInstance().getTimeInMillis();
 		File file = getArquivoDJ();
-		
+
 		if (file != null) {
 			String texto = extraiPDF(file);
 			return busca(texto, numeroProcesso);
 		}
-		
+
 		return null;
 	}
 
@@ -67,6 +70,12 @@ public class TJService {
 			FileReader fileReader = new FileReader(arquivo);
 		} catch (FileNotFoundException e) {
 			arquivo = downloadUltimoDj();
+			try {
+				Thread.sleep(10000);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 
 		return arquivo;
@@ -74,6 +83,8 @@ public class TJService {
 
 	private String getPath() {
 		LocalDate ontem = LocalDate.now().minusDays(1);
+		while (ontem.getDayOfWeek().equals(DayOfWeek.SUNDAY) || ontem.getDayOfWeek().equals(DayOfWeek.SATURDAY))
+			ontem = ontem.minusDays(1);
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		String ontemString = ontem.format(formatter);
 
@@ -82,6 +93,8 @@ public class TJService {
 
 	private File downloadUltimoDj() {
 		LocalDate ontem = LocalDate.now().minusDays(1);
+		while (ontem.getDayOfWeek().equals(DayOfWeek.SUNDAY) || ontem.getDayOfWeek().equals(DayOfWeek.SATURDAY))
+			ontem = ontem.minusDays(1);
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		String ontemString = ontem.format(formatter);
 		String URL = "https://esaj.tjce.jus.br/cdje/downloadCaderno.do?dtDiario=" + ontemString
@@ -141,11 +154,15 @@ public class TJService {
 	}
 
 	public String busca(String texto, String numeroProcesso) {
-		String parteA = texto.substring(texto.indexOf(numeroProcesso), texto.length());
-		
-		String textoBusca = parteA.substring(0, parteA.indexOf("ADV:"));
-		
-		return textoBusca.replace("\n", " ");
+		try {
+			String parteA = texto.substring(texto.indexOf(numeroProcesso), texto.length());
+			String textoBusca = parteA.substring(0, parteA.indexOf("ADV:"));
+
+			return textoBusca.replace("\n", " ");
+		} catch (StringIndexOutOfBoundsException e) {
+			return null;
+		}
+
 	}
 
 }
