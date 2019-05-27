@@ -18,6 +18,7 @@ export class UsuarioCadastroComponent implements OnInit {
   ufOab: string;
   ufs = [];
   loading = false;
+  mostraSenha = false;
 
   constructor(public auth: AuthService,
               private usuarioService: UsuarioService,

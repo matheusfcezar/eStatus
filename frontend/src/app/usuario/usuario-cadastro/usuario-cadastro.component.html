@@ -28,8 +28,8 @@
             <div class="ui-g-12 ui-fluid">
                 <label>Senha</label>
                 <div class="ui-inputgroup">
-                    <input type="password" pInputText name="senha" placeholder="Senha" required [(ngModel)]="usuario.password">
-                    <span class="ui-inputgroup-addon"><i class="pi pi-eye"></i></span>
+                    <input [type]="mostraSenha ? 'text' : 'password' " pInputText name="senha" placeholder="Senha" required [(ngModel)]="usuario.password">
+                    <button pButton type="button"  (click)="mostraSenha = !mostraSenha" icon="pi pi-eye"></button>
                 </div>
             </div>
         </div>
