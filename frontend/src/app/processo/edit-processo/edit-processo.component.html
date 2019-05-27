@@ -79,6 +79,23 @@
   <div class="ui-g">
     <div class="ui-g-6">
       <p-panel [transitionOptions]="'200ms'" header="Documentos" [toggleable]="true">
+        <table class="table-in-panel">
+          <tbody>
+            <tr *ngFor="let doc of docs">
+              <td (mouseout)="hideArquivo($event,overlayPanel)" (mouseenter)="isImagem(doc.extensao) ? showArquivo($event,doc,overlayPanel) : ''">{{ doc.nome }}</td>
+              <td width="80px">
+                <button pButton type="button" (click)="getArquivo(doc)" class="ui-button-secondary" icon="pi pi-download"></button>&nbsp;
+                <button pButton type="button" (click)="confirmarExclusaoDeArquivo(doc.id)" class="ui-button-secondary" icon="pi pi-trash"></button>
+              </td>
+            </tr>
+          </tbody>
+          <p-overlayPanel #overlayPanel>
+              <img *ngIf="arquivoSelecionado" style="max-width: 100px" [src]="arquivoSource">
+          </p-overlayPanel>
+        </table>
+        <p-footer style="text-align: right !important">
+          <button pButton type="button" icon="pi pi-plus" (click)="showAddArquivoModal()" label="Adicionar Arquivo" class="ui-button-rounded ui-button-secondary"></button>
+        </p-footer>
       </p-panel>
     </div>
     <div class="ui-g-6">

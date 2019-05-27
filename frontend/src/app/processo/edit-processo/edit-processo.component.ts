@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Processo, Usuario, Andamento } from 'src/app/model';
+import { Processo, Usuario, Andamento, Arquivo } from 'src/app/model';
 import { ProcessoService } from '../processo.service';
 import { AuthService } from 'src/app/seguranca/auth.service';
 import { DialogService, ConfirmationService } from 'primeng/api';
 import { AddUsuarioComponent } from '../add-usuario/add-usuario.component';
 import { CadastroProcessoComponent } from '../cadastro-processo/cadastro-processo.component';
 import { AndamentoComponent } from '../andamento/andamento.component';
+import { AddArquivoComponent } from '../add-arquivo/add-arquivo.component';
+import { OverlayPanel } from 'primeng/overlaypanel';
 
 @Component({
   selector: 'app-edit-processo',
@@ -21,12 +23,14 @@ export class EditProcessoComponent implements OnInit {
   andamentos: Andamento[] = [];
   processo: Processo;
   usuarios: Usuario[];
+  docs: Arquivo[];
+  arquivoSelecionado: Arquivo;
 
   constructor(public auth: AuthService,
-              private route: ActivatedRoute,
-              public dialogService: DialogService,
-              private processoService: ProcessoService,
-              private confirmationService: ConfirmationService) { }
+    private route: ActivatedRoute,
+    public dialogService: DialogService,
+    private processoService: ProcessoService,
+    private confirmationService: ConfirmationService) { }
 
   ngOnInit() {
     this.getProcesso();
@@ -39,6 +43,15 @@ export class EditProcessoComponent implements OnInit {
         this.processo = resp;
         this.getUsuarios();
         this.getAndamentos();
+        this.getArquivos();
+      }
+    );
+  }
+
+  getArquivos() {
+    this.processoService.getArquivos(this.processo.id).subscribe(
+      resp => {
+        this.docs = resp;
       }
     );
   }
@@ -72,7 +85,7 @@ export class EditProcessoComponent implements OnInit {
 
   showAndamentoModal(andamento) {
     const ref = this.dialogService.open(AndamentoComponent, {
-      width: '400px',
+      width: '800px',
       data: { andamento: andamento ? andamento : this.andamentoSelecionado, idProcesso: this.processo.id, edit: andamento ? true : false },
       closeOnEscape: true,
       dismissableMask: true,
@@ -89,6 +102,18 @@ export class EditProcessoComponent implements OnInit {
     const ref = this.dialogService.open(CadastroProcessoComponent, {
       header: 'Editar Dados Básicos',
       width: '400px'
+    });
+
+    ref.onClose.subscribe(() => {
+      this.getProcesso();
+    });
+  }
+
+  showAddArquivoModal() {
+    const ref = this.dialogService.open(AddArquivoComponent, {
+      header: 'Adicionar arquivos',
+      width: '400px',
+      data: { id: this.processo.id }
     });
 
     ref.onClose.subscribe(() => {
@@ -118,13 +143,63 @@ export class EditProcessoComponent implements OnInit {
     );
   }
 
+  removerDocumento(id) {
+    this.processoService.removeArquivo(id).subscribe(
+      resp => {
+        this.getProcesso();
+      }
+    );
+  }
+
   confirmarExclusaoDeAndamento(id) {
     this.confirmationService.confirm({
       message: 'Você confirma a exclusão deste Expediente?',
       accept: () => {
-          this.removerAndamento(id);
+        this.removerAndamento(id);
       }
-  });
+    });
+  }
+
+  confirmarExclusaoDeArquivo(id) {
+    this.confirmationService.confirm({
+      message: 'Você confirma a exclusão deste Arquivo?',
+      accept: () => {
+        this.removerDocumento(id);
+      }
+    });
+  }
+
+  showArquivo(event, arquivo: Arquivo, overlayPanel: OverlayPanel) {
+    this.arquivoSelecionado = arquivo;
+    overlayPanel.show(event);
+  }
+
+  hideArquivo(event, overlayPanel: OverlayPanel) {
+    console.log('sasiu');
+    overlayPanel.hide();
+  }
+
+  getArquivo(doc: Arquivo) {
+    let linkSource = '';
+    if (this.isImagem(doc)) {
+      linkSource = `data:image/${doc.extensao};base64,${doc.dados}`;
+    } else {
+      linkSource = 'data:application/octet-stream;base64,' + doc.dados;
+    }
+    const downloadLink = document.createElement('a');
+
+    downloadLink.href = linkSource;
+    downloadLink.download = doc.nome;
+    downloadLink.click();
+  }
+
+  get arquivoSource() {
+
+    return `data:image/${this.arquivoSelecionado.extensao};base64,${this.arquivoSelecionado.dados}`;
+  }
+
+  isImagem(extensao): boolean {
+    return extensao === 'jpg' || extensao === 'jpeg' || extensao === 'png' || extensao === 'gif';
   }
 
 }

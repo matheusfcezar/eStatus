@@ -1,0 +1,3 @@
+<p-fileUpload name="anexo"  maxFileSize="" cancelLabel="Cancelar" uploadLabel="Enviar" chooseLabel="Selecionar" accept="image/*,application/*"
+  [url]="urlUpload" (onBeforeSend)="preUpload($event)" (onUpload)="posUpload($event)" (onError)="errorUpload($event)"
+  [hidden]="uploadEmAndamento"></p-fileUpload>

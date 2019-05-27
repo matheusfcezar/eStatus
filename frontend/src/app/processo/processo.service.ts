@@ -9,6 +9,7 @@ export class ProcessoService {
     processoUrl = `${environment.apiUrl}/processo`;
     foroUrl = `${environment.apiUrl}/foro`;
     andamentoUrl = `${environment.apiUrl}/andamento`;
+    arquivoUrl = `${environment.apiUrl}/arquivo`;
 
     constructor(private http: HttpClient) {}
 
@@ -50,6 +51,14 @@ export class ProcessoService {
         return this.http.get(`${this.andamentoUrl}/processo/${id}`);
     }
 
+    getArquivos(id: number): Observable<any> {
+        return this.http.get(`${this.arquivoUrl}/processo/${id}`);
+    }
+
+    removeArquivo(id: number): Observable<any> {
+        return this.http.delete(`${this.arquivoUrl}/${id}`);
+    }
+
     addAndamento(andamento: Andamento): Observable<any> {
         return this.http.post(`${this.andamentoUrl}`, andamento);
     }
@@ -65,4 +74,5 @@ export class ProcessoService {
     removeUserInProcesso(idProcesso: number, idUsuario): Observable<any> {
         return this.http.delete(`${this.processoUrl}/${idProcesso}/${idUsuario}`);
     }
+
 }

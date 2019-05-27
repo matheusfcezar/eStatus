@@ -35,3 +35,12 @@ export class Andamento {
     tipo: string;
     idProcesso: number;
 }
+
+export class Arquivo {
+    id: number;
+    nome: string;
+    dados: string;
+    dataInsercao: Date;
+    idProcesso: number;
+    extensao: string;
+}
